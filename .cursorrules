@@ -1,0 +1,15 @@
+{
+  "name": "Jira-killer MVP",
+  "taxonomy": {
+    "frontend": "Next.js 15, Tambo SDK, Tailwind CSS",
+    "backend": "Supabase (PostgreSQL, Auth, Functions)",
+    "generative_ui": "UI is dynamic and controlled by the agent. Favor tool-calling over raw text.",
+    "world_model": "Epics -> Sprints -> Tasks structure with vector context for semantic intelligence."
+  },
+  "rules": [
+    "Always use the defined Zod schemas in `src/lib/tambo/schemas.ts` for components.",
+    "Favor `withInteractable` for stateful components.",
+    "When suggesting database changes, generate SQL migrations first.",
+    "Prioritize tool use for data fetching and UI updates."
+  ]
+}
