@@ -2,8 +2,13 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ============================================
+   VANGRAPH DESIGN SYSTEM
+   Dark theme inspired by the prototype
+   ============================================ */
+
 @theme inline {
-  /* Tailwind CSS Variables customized with tambo colors */
+  /* Tailwind CSS Variables - Vangraph Dark Theme */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -22,88 +27,81 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
 
-  /* Tambo Specific Variables needed for tambo components */
+  /* Vangraph Semantic Colors */
+  --color-vg-primary: var(--vg-primary);
+  --color-vg-success: var(--vg-success);
+  --color-vg-warning: var(--vg-warning);
+  --color-vg-danger: var(--vg-danger);
+  --color-vg-purple: var(--vg-purple);
+  --color-vg-surface: var(--vg-surface);
+  --color-vg-surface-hover: var(--vg-surface-hover);
+
+  /* Tambo Component Variables */
   --color-container: var(--container);
   --color-backdrop: var(--backdrop);
   --color-muted-backdrop: var(--muted-backdrop);
 }
 
 :root {
-  /* Default Tailwind CSS Variables customized with tambo colors */
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.14 0 285);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.14 0 285);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.14 0 285);
-  --primary: oklch(0.31 0.02 281);
-  --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.54 0.027 261);
-  --secondary-foreground: oklch(1 0 0);
-  --muted: oklch(0.92 0 260);
-  --muted-foreground: oklch(0.73 0.022 260);
-  --accent: oklch(0.97 0 286);
-  --accent-foreground: oklch(0.21 0 286);
-  --destructive: oklch(0.64 0.2 25);
-  --border: oklch(0.93 0 242);
-  --input: oklch(0.92 0 286);
-  --ring: oklch(0.14 0 285);
-  --chart-1: oklch(0.72 0.15 60);
-  --chart-2: oklch(0.62 0.2 6);
-  --chart-3: oklch(0.53 0.2 262);
-  --chart-4: oklch(0.7 0.13 165);
-  --chart-5: oklch(0.62 0.2 313);
+  /* Vangraph is dark-first, so we set dark as default */
+  --background: #0a0f1a;
+  --foreground: #ffffff;
+  --card: #1e293b;
+  --card-foreground: #ffffff;
+  --popover: #1e293b;
+  --popover-foreground: #ffffff;
+  --primary: #00b4d8;
+  --primary-foreground: #0a0f1a;
+  --secondary: #111827;
+  --secondary-foreground: #94a3b8;
+  --muted: #1e293b;
+  --muted-foreground: #64748b;
+  --accent: #00b4d8;
+  --accent-foreground: #0a0f1a;
+  --destructive: #ef4444;
+  --border: #1e293b;
+  --input: #243043;
+  --ring: #00b4d8;
 
-  /* Tambo Specific Variables needed for tambo components */
-  --container: oklch(0.98 0 247);
-  --backdrop: oklch(0.25 0.07 252 / 0.25);
-  --muted-backdrop: oklch(0.25 0.07 252 / 0.1);
-  --radius: 0.5rem;
-  --panel-left-width: 500px;
-  --panel-right-width: 500px;
-  --sidebar-width: 3rem;
+  /* Vangraph Semantic Colors */
+  --vg-primary: #00b4d8;
+  --vg-success: #22c55e;
+  --vg-warning: #f59e0b;
+  --vg-danger: #ef4444;
+  --vg-purple: #a855f7;
+  --vg-surface: #1e293b;
+  --vg-surface-hover: #243043;
+
+  /* Tambo Specific Variables */
+  --container: #111827;
+  --backdrop: rgba(0, 180, 216, 0.15);
+  --muted-backdrop: rgba(0, 180, 216, 0.05);
+  --radius: 0.75rem;
+  --panel-left-width: 280px;
+  --panel-right-width: 400px;
+  --sidebar-width: 4rem;
 }
 
-.dark {
-  /* Dark Mode Tailwind CSS Variables customized with tambo colors */
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.72 0.15 60);
-  --chart-2: oklch(0.62 0.2 6);
-  --chart-3: oklch(0.53 0.2 262);
-  --chart-4: oklch(0.7 0.13 165);
-  --chart-5: oklch(0.62 0.2 313);
-
-  /* Tambo Specific Variables needed for tambo components */
-  --container: oklch(0.98 0 247);
-  --backdrop: oklch(0.25 0.07 252 / 0.25);
-  --muted-backdrop: oklch(0.25 0.07 252 / 0.1);
-  --radius: 0.5rem;
-  --panel-left-width: 500px;
-  --panel-right-width: 500px;
-  --sidebar-width: 3rem;
+/* Light mode override (optional, Vangraph is dark-first) */
+.light {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #0891b2;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #475569;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #0891b2;
+  --accent-foreground: #ffffff;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #0891b2;
 }
 
 @layer base {
@@ -111,24 +109,128 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
-    font-family: Arial, Helvetica, sans-serif;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
 }
 
-/*
-This is a custom animation for the interactable components.
-It's used to highlight the fields that have been updated.
-You can remove this if you don't want to use it.
-*/
+/* ============================================
+   VANGRAPH COMPONENT UTILITIES
+   ============================================ */
+
+/* Status Dot */
+.vg-dot {
+  @apply w-2 h-2 rounded-full;
+}
+.vg-dot-active {
+  @apply bg-vg-success;
+}
+.vg-dot-idle {
+  @apply bg-muted-foreground;
+}
+.vg-dot-reviewing {
+  @apply bg-vg-warning;
+}
+
+/* Card Styles */
+.vg-card {
+  @apply bg-card rounded-xl border border-border p-4 transition-all duration-200;
+}
+.vg-card:hover {
+  @apply bg-vg-surface-hover border-vg-primary/30;
+}
+
+/* Badge Styles */
+.vg-badge {
+  @apply inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider;
+}
+.vg-badge-primary {
+  @apply bg-vg-primary/20 text-vg-primary;
+}
+.vg-badge-success {
+  @apply bg-vg-success/20 text-vg-success;
+}
+.vg-badge-warning {
+  @apply bg-vg-warning/20 text-vg-warning;
+}
+.vg-badge-danger {
+  @apply bg-vg-danger/20 text-vg-danger;
+}
+.vg-badge-purple {
+  @apply bg-vg-purple/20 text-vg-purple;
+}
+
+/* Button Styles */
+.vg-btn {
+  @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200;
+}
+.vg-btn-primary {
+  @apply bg-vg-primary text-primary-foreground hover:bg-vg-primary/90 shadow-lg shadow-vg-primary/25;
+}
+.vg-btn-ghost {
+  @apply bg-transparent text-foreground hover:bg-vg-surface;
+}
+.vg-btn-outline {
+  @apply border border-border bg-transparent text-foreground hover:bg-vg-surface hover:border-vg-primary/50;
+}
+
+/* Progress Bar */
+.vg-progress {
+  @apply h-1.5 rounded-full bg-vg-surface overflow-hidden;
+}
+.vg-progress-bar {
+  @apply h-full rounded-full bg-gradient-to-r from-vg-primary to-vg-purple transition-all duration-500;
+}
+
+/* Sidebar */
+.vg-sidebar {
+  @apply fixed left-0 top-0 h-screen w-[var(--sidebar-width)] bg-secondary border-r border-border flex flex-col items-center py-4 gap-2;
+}
+.vg-sidebar-item {
+  @apply p-3 rounded-xl text-muted-foreground hover:text-foreground hover:bg-vg-surface transition-colors cursor-pointer;
+}
+.vg-sidebar-item.active {
+  @apply bg-vg-primary/10 text-vg-primary;
+}
+
+/* Header */
+.vg-header {
+  @apply h-14 border-b border-border bg-secondary/50 backdrop-blur-sm flex items-center justify-between px-6;
+}
+
+/* Main Content */
+.vg-main {
+  @apply ml-[var(--sidebar-width)] min-h-screen;
+}
+
+/* Kanban Column */
+.vg-column {
+  @apply flex-1 min-w-[280px] max-w-[320px];
+}
+.vg-column-header {
+  @apply flex items-center gap-2 mb-4 text-xs font-bold uppercase tracking-wider text-muted-foreground;
+}
+
+/* AI Chat Panel */
+.vg-ai-panel {
+  @apply bg-vg-surface rounded-xl border border-vg-primary/30 p-4 shadow-lg shadow-vg-primary/10;
+}
+
+/* Code Block */
+.vg-code {
+  @apply bg-[#0d1117] rounded-lg p-4 font-mono text-sm overflow-x-auto border border-border;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
 
 @keyframes flash {
-  0%,
-  100% {
+  0%, 100% {
     background-color: transparent;
   }
   50% {
-    background-color: rgb(59 130 246 / 0.3);
+    background-color: rgba(0, 180, 216, 0.2);
   }
 }
 
@@ -136,9 +238,19 @@ You can remove this if you don't want to use it.
   animation: flash 1s ease-in-out;
 }
 
-/*
-Animated gradient for thinking text, creates a shimmering effect that moves across the text.
-*/
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(0, 180, 216, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px 4px rgba(0, 180, 216, 0.2);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
 @keyframes thinking-gradient {
   0% {
     background-position: -200% center;
@@ -149,18 +261,16 @@ Animated gradient for thinking text, creates a shimmering effect that moves acro
 }
 
 .animate-thinking-gradient {
-  /* Fallback */
-  background: linear-gradient(90deg, #666 0%, #bbb 50%, #666 100%);
-  /* Preferred (overrides when supported) */
-  background: linear-gradient(
-    90deg,
-    oklch(0.14 0 0) 0%,
-    oklch(0.7 0 0) 50%,
-    oklch(0.14 0 0) 100%
-  );
+  background: linear-gradient(90deg, #64748b 0%, #00b4d8 50%, #64748b 100%);
   background-size: 200% 100%;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: thinking-gradient 2s linear infinite;
+}
+
+/* Agent status glow */
+.vg-agent-active::before {
+  content: '';
+  @apply absolute inset-0 rounded-xl bg-vg-success/10 animate-pulse;
 }

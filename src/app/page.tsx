@@ -1,98 +1,128 @@
-import { ApiKeyCheck } from "@/components/ApiKeyCheck";
-import Image from "next/image";
-
-const KeyFilesSection = () => (
-  <div className="bg-white px-8 py-4">
-    <h2 className="text-xl font-semibold mb-4">How it works:</h2>
-    <ul className="space-y-4 text-gray-600">
-      <li className="flex items-start gap-2">
-        <span>📄</span>
-        <span>
-          <code className="font-medium">src/app/layout.tsx</code> - Main layout
-          with TamboProvider
-        </span>
-      </li>
-      <li className="flex items-start gap-2">
-        <span>📄</span>
-        <span>
-          <code className="font-medium font-mono">src/app/chat/page.tsx</code> -
-          Chat page with TamboProvider
-        </span>
-      </li>
-      <li className="flex items-start gap-2">
-        <span className="text-blue-500">📄</span>
-        <span>
-          <code className="font-medium font-mono">src/lib/tambo.ts</code> -
-          Component and tool registration
-        </span>
-      </li>
-      <li className="flex items-start gap-2">
-        <span className="text-blue-500">📄</span>
-        <span>
-          <code className="font-medium font-mono">README.md</code> - For more
-          details check out the README
-        </span>
-      </li>
-    </ul>
-    <div className="flex gap-4 flex-wrap mt-4">
-      <a
-        href="https://docs.tambo.co"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="px-6 py-3 rounded-md font-medium transition-colors text-lg mt-4 border border-gray-300 hover:bg-gray-50"
-      >
-        View Docs
-      </a>
-      <a
-        href="https://tambo.co/dashboard"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="px-6 py-3 rounded-md font-medium transition-colors text-lg mt-4 border border-gray-300 hover:bg-gray-50"
-      >
-        Dashboard
-      </a>
-    </div>
-  </div>
-);
+import Link from "next/link";
+import { Sidebar } from "@/components/layout/sidebar";
+import { Header } from "@/components/layout/header";
+import { Badge } from "@/components/ui/badge";
+import { 
+  Zap, 
+  Bot, 
+  LayoutDashboard, 
+  ArrowRight,
+  Sparkles,
+  GitBranch,
+  CheckCircle2,
+} from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="min-h-screen p-8 flex flex-col items-center justify-center font-[family-name:var(--font-geist-sans)]">
-      <main className="max-w-2xl w-full space-y-8">
-        <div className="flex flex-col items-center">
-          <a href="https://tambo.co" target="_blank" rel="noopener noreferrer">
-            <Image
-              src="/Octo-Icon.svg"
-              alt="Tambo AI Logo"
-              width={80}
-              height={80}
-              className="mb-4"
-            />
-          </a>
-          <h1 className="text-4xl text-center">Tambo AI Project Template</h1>
-          <p className="text-gray-500 mt-2 text-center text-lg">
-            Ready for your custom development.
-          </p>
-        </div>
-
-        <div className="w-full space-y-8">
-          <div className="bg-white px-8 py-4">
-            <h2 className="text-xl font-semibold mb-4">Setup Checklist</h2>
-            <ApiKeyCheck>
-              <div className="flex gap-4 flex-wrap">
-                <a
-                  href="/chat"
-                  className="px-6 py-3 rounded-md font-medium shadow-sm transition-colors text-lg mt-4 bg-[#7FFFC3] hover:bg-[#72e6b0] text-gray-800"
-                >
-                  Go to Chat →
-                </a>
+    <div className="flex min-h-screen bg-background">
+      <Sidebar />
+      <div className="flex-1 ml-[var(--sidebar-width)] flex flex-col">
+        <Header projectName="Vangraph" sprintName="MVP" />
+        
+        <main className="flex-1 p-8">
+          <div className="max-w-4xl mx-auto">
+            {/* Hero Section */}
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 mb-4">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-vg-primary to-vg-purple flex items-center justify-center shadow-lg shadow-vg-primary/25">
+                  <Sparkles className="w-8 h-8 text-white" />
+                </div>
               </div>
-            </ApiKeyCheck>
-          </div>
+              <h1 className="text-4xl font-bold text-foreground mb-3">
+                Vangraph
+              </h1>
+              <p className="text-lg text-muted-foreground max-w-xl mx-auto">
+                Autonomous Project Management powered by AI Agents. 
+                Let Vangraph refine your backlog, plan sprints, and keep your team unblocked.
+              </p>
+            </div>
 
-          <KeyFilesSection />
-        </div>
-      </main>
+            {/* Agent Status Preview */}
+            <div className="grid grid-cols-3 gap-4 mb-8">
+              {[
+                { name: "Coder Agent", status: "Active", icon: Bot, color: "vg-success" },
+                { name: "QA Agent", status: "Idle", icon: CheckCircle2, color: "muted-foreground" },
+                { name: "Architect", status: "Reviewing", icon: GitBranch, color: "vg-warning" },
+              ].map((agent) => (
+                <div key={agent.name} className="vg-card flex items-center justify-between">
+                  <div>
+                    <p className="text-xs text-muted-foreground">{agent.name}</p>
+                    <p className="text-sm font-semibold flex items-center gap-2">
+                      <span className={`w-2 h-2 rounded-full bg-${agent.color}`} />
+                      {agent.status}
+                    </p>
+                  </div>
+                  <agent.icon className={`w-5 h-5 text-${agent.color}`} />
+                </div>
+              ))}
+            </div>
+
+            {/* Quick Actions */}
+            <div className="grid grid-cols-2 gap-4 mb-8">
+              <Link
+                href="/chat"
+                className="vg-card flex items-center gap-4 group hover:border-vg-primary/50"
+              >
+                <div className="w-12 h-12 rounded-xl bg-vg-primary/20 flex items-center justify-center text-vg-primary group-hover:bg-vg-primary group-hover:text-primary-foreground transition-colors">
+                  <Sparkles className="w-6 h-6" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-foreground group-hover:text-vg-primary transition-colors">
+                    Open Chat
+                  </h3>
+                  <p className="text-xs text-muted-foreground">
+                    Talk to Vangraph AI
+                  </p>
+                </div>
+                <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-vg-primary transition-colors" />
+              </Link>
+
+              <Link
+                href="/board"
+                className="vg-card flex items-center gap-4 group hover:border-vg-primary/50"
+              >
+                <div className="w-12 h-12 rounded-xl bg-vg-purple/20 flex items-center justify-center text-vg-purple group-hover:bg-vg-purple group-hover:text-white transition-colors">
+                  <LayoutDashboard className="w-6 h-6" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-foreground group-hover:text-vg-purple transition-colors">
+                    Kanban Board
+                  </h3>
+                  <p className="text-xs text-muted-foreground">
+                    View sprint tasks
+                  </p>
+                </div>
+                <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-vg-purple transition-colors" />
+              </Link>
+            </div>
+
+            {/* Features */}
+            <div className="vg-card">
+              <h2 className="text-lg font-bold text-foreground mb-4">
+                Tambo Features Demonstrated
+              </h2>
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { name: "Generative Components", desc: "TaskCard, PhaseCard, AgentStatus" },
+                  { name: "Interactable Components", desc: "AIConsultant, SpecViewer" },
+                  { name: "Tools", desc: "getProjectStats, getTasks, createTask" },
+                  { name: "Context Helpers", desc: "current_time, active_sprint" },
+                  { name: "MCP Integration", desc: "Supabase MCP server ready" },
+                  { name: "Conversation Storage", desc: "Built-in thread history" },
+                ].map((feature) => (
+                  <div key={feature.name} className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-vg-success mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="text-sm font-medium text-foreground">{feature.name}</p>
+                      <p className="text-xs text-muted-foreground">{feature.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
   );
 }

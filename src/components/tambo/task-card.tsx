@@ -2,80 +2,120 @@
 
 import { withInteractable } from "@tambo-ai/react";
 import { cn } from "@/lib/utils";
-import { taskCardSchema, Task } from "@/lib/tambo/schemas";
-import { 
-  Card, 
-  CardContent, 
-  CardHeader, 
-  CardTitle,
-  CardDescription 
-} from "@/components/ui/card-data"; // Reuse existing card patterns or styles
-import { Badge } from "lucide-react"; // Generic icons for now or standard UI kit
+import { z } from "zod";
+import { Badge } from "@/components/ui/badge";
+import { MessageSquare } from "lucide-react";
 
-interface TaskCardProps {
-  task: Task;
+// Schema for TaskCard
+export const taskCardSchema = z.object({
+  task: z.object({
+    id: z.string().describe("Task ID like 'VA-089'"),
+    title: z.string().describe("Task title"),
+    description: z.string().optional().describe("Task description"),
+    status: z.enum(["backlog", "in-progress", "review", "done"]),
+    priority: z.enum(["low", "medium", "high", "critical"]),
+    assignees: z.array(z.string()).optional().describe("Initials of assignees"),
+    comments: z.number().optional().describe("Number of comments"),
+  }),
+  showDescription: z.boolean().default(true),
+  isEditable: z.boolean().default(true),
+});
+
+export type TaskCardProps = z.infer<typeof taskCardSchema>;
+
+// Direct props interface for base component
+interface TaskCardBaseProps {
+  task: {
+    id: string;
+    title: string;
+    description?: string;
+    status: "backlog" | "in-progress" | "review" | "done";
+    priority: "low" | "medium" | "high" | "critical";
+    assignees?: string[];
+    comments?: number;
+  };
   showDescription?: boolean;
   isEditable?: boolean;
 }
 
-const priorityColors = {
-  low: "bg-blue-100 text-blue-700",
-  medium: "bg-yellow-100 text-yellow-700",
-  high: "bg-orange-100 text-orange-700",
-  critical: "bg-red-100 text-red-700",
+const priorityVariants: Record<string, "default" | "primary" | "success" | "warning" | "danger"> = {
+  low: "default",
+  medium: "primary",
+  high: "warning",
+  critical: "danger",
 };
 
-const statusColors = {
-  todo: "bg-gray-100 text-gray-700",
-  "in-progress": "bg-blue-100 text-blue-700",
-  review: "bg-purple-100 text-purple-700",
-  done: "bg-green-100 text-green-700",
-};
-
-export const TaskCardBase = ({ task, showDescription = true, isEditable = true }: TaskCardProps) => {
+// Base component - can be used directly in JSX
+export function TaskCardBase({ task, showDescription = true }: TaskCardBaseProps) {
   return (
-    <div className={cn(
-      "p-4 rounded-lg border bg-white shadow-sm hover:shadow-md transition-shadow",
-      "flex flex-col gap-3 group relative cursor-pointer"
-    )}>
-      <div className="flex justify-between items-start gap-2">
-        <h4 className="font-semibold text-sm leading-tight text-gray-900 group-hover:text-blue-600 transition-colors">
-          {task.title}
-        </h4>
-        <div className={cn(
-          "px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider whitespace-nowrap",
-          priorityColors[task.priority]
-        )}>
-          {task.priority}
-        </div>
+    <div className="vg-card flex flex-col gap-3 group cursor-pointer">
+      {/* Header: ID + Priority */}
+      <div className="flex items-start justify-between gap-2">
+        <span className="text-[10px] text-muted-foreground font-mono">
+          {task.id}
+        </span>
+        {(task.priority === "high" || task.priority === "critical") && (
+          <Badge variant={priorityVariants[task.priority]}>
+            {task.priority === "critical" ? "HIGH PRIORITY" : task.priority}
+          </Badge>
+        )}
       </div>
 
+      {/* Title */}
+      <h4 className="text-sm font-semibold text-foreground group-hover:text-vg-primary transition-colors leading-tight">
+        {task.title}
+      </h4>
+
+      {/* Description */}
       {showDescription && task.description && (
-        <p className="text-xs text-gray-500 line-clamp-2 leading-relaxed">
+        <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
           {task.description}
         </p>
       )}
 
+      {/* Footer: Assignees + Comments */}
       <div className="flex items-center justify-between mt-1">
-        <div className={cn(
-          "px-2 py-0.5 rounded-full text-[10px] font-medium transition-all",
-          statusColors[task.status]
-        )}>
-          {task.status.replace('-', ' ')}
-        </div>
-        
-        {task.epicId && (
-          <span className="text-[10px] text-gray-400 font-mono">
-            EPIC-{task.epicId.slice(0, 4)}
-          </span>
+        {/* Assignees */}
+        {task.assignees && task.assignees.length > 0 && (
+          <div className="flex items-center -space-x-1">
+            {task.assignees.slice(0, 3).map((initials, idx) => (
+              <div
+                key={idx}
+                className="w-6 h-6 rounded-full bg-vg-surface border border-border flex items-center justify-center text-[8px] font-bold text-muted-foreground"
+              >
+                {initials}
+              </div>
+            ))}
+            {task.assignees.length > 3 && (
+              <div className="w-6 h-6 rounded-full bg-vg-surface border border-border flex items-center justify-center text-[8px] font-bold text-muted-foreground">
+                +{task.assignees.length - 3}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Comments */}
+        {task.comments !== undefined && task.comments > 0 && (
+          <div className="flex items-center gap-1 text-muted-foreground">
+            <MessageSquare className="w-3 h-3" />
+            <span className="text-[10px]">{task.comments}</span>
+          </div>
         )}
       </div>
+
+      {/* Progress bar for in-progress tasks */}
+      {task.status === "in-progress" && (
+        <div className="vg-progress mt-1">
+          <div className="vg-progress-bar" style={{ width: "60%" }} />
+        </div>
+      )}
     </div>
   );
-};
+}
 
+// Interactable version for Tambo registry
 export const TaskCard = withInteractable(TaskCardBase, {
   componentName: "TaskCard",
-  description: "A high-fidelity card representing a project task with priority and status.",
+  description: "Displays a project task card with ID, title, priority, assignees, and progress",
   propsSchema: taskCardSchema,
 });
