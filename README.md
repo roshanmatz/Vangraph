@@ -1,131 +1,123 @@
-# Tambo Template
+# Vangraph
 
-This is a starter NextJS app with Tambo hooked up to get your AI app development started quickly.
+![Vangraph Banner](public/og-image.png)
 
-## Get Started
+> **Autonomous Project Management powered by AI Agents.**  
+> Refine your backlog, plan sprints, and keep your team unblocked with intelligent agents.
 
-1. Run `npm create-tambo@latest my-tambo-app` for a new project
+![Status](https://img.shields.io/badge/Status-Prototype-blue)
+![Tech](https://img.shields.io/badge/Tech-Next.js_15_|_Tambo_|_Supabase-black)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-2. `npm install`
+## Overview
 
-3. `npx tambo init`
+**Vangraph** is an AI-powered project management platform designed to automate the tedious parts of software development lifecycles. By integrating **AI Agents** (Coder, QA, Architect) directly into the workflow, Vangraph helps teams:
 
-- or rename `example.env.local` to `.env.local` and add your tambo API key you can get for free [here](https://tambo.co/dashboard).
+*   **Automate Backlog Refinement**: Agents analyze tasks and suggest improvements.
+*   **Intelligent Sprint Planning**: AI-driven velocity tracking and sprint goal setting.
+*   **Real-time Insights**: "Consultant" agents providing architectural and quality feedback.
+*   **Generative UI**: Dynamic task cards, dashboards, and status reports generated on the fly.
 
-4. Run `npm run dev` and go to `localhost:3000` to use the app!
+## Key Features
 
-## Customizing
+*   **🤖 AI Agents**: Dedicated agents for Coding, QA, and Architecture that monitor and advise on project status.
+*   **📊 Generative Components**:
+    *   **Task Cards**: smart visualization of work items.
+    *   **Phase Cards**: track project lifecycle stages.
+    *   **Agent Status**: real-time activity monitoring of AI helpers.
+*   **⚡ Tambo Integration**: Built on Tambo SDK for seamless generative interface creation.
+*   **🛠️ Tools & MCP**:
+    *   Supabase integration for data persistence.
+    *   Model Context Protocol (MCP) support for connecting external tools.
+*   **💬 Interactive Chat**: Chat with Vangraph to create tasks, query stats, or get project advice.
 
-### Change what components tambo can control
+## Tech Stack
 
-You can see how components are registered with tambo in `src/lib/tambo.ts`:
+*   **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+*   **AI Integration**: [Tambo SDK](https://tambo.ai)
+*   **Language**: TypeScript
+*   **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+*   **Validation**: Zod
+*   **Backend**: Supabase (via MCP and direct client)
 
-```tsx
-export const components: TamboComponent[] = [
-  {
-    name: "Graph",
-    description:
-      "A component that renders various types of charts (bar, line, pie) using Recharts. Supports customizable data visualization with labels, datasets, and styling options.",
-    component: Graph,
-    propsSchema: graphSchema,
-  },
-  // Add more components here
-];
-```
+## Quick Start
 
-You can install the graph component into any project with:
+### Prerequisites
 
-```bash
-npx tambo add graph
-```
+*   Node.js 18+
+*   [Supabase Account](https://supabase.com/) (for backend)
+*   [Tambo Account](https://tambo.ai/) (for AI features)
 
-The example Graph component demonstrates several key features:
+### Installation
 
-- Different prop types (strings, arrays, enums, nested objects)
-- Multiple chart types (bar, line, pie)
-- Customizable styling (variants, sizes)
-- Optional configurations (title, legend, colors)
-- Data visualization capabilities
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/hebypaul/Vangraph.git
+    cd vangraph
+    ```
 
-Update the `components` array with any component(s) you want tambo to be able to use in a response!
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
 
-You can find more information about the options [here](https://docs.tambo.co/concepts/generative-interfaces/generative-components)
+3.  **Configure Environment**
+    Create a `.env.local` file in the root directory:
+    ```bash
+    cp example.env.local .env.local
+    ```
+    Add your API keys:
+    ```env
+    NEXT_PUBLIC_TAMBO_API_KEY=your_tambo_key_here
+    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_key
+    ```
 
-### Add tools for tambo to use
+4.  **Run the application**
+    ```bash
+    npm run dev
+    ```
+    Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-Tools are defined with `inputSchema` and `outputSchema`:
+## Configuration
 
-```tsx
-export const tools: TamboTool[] = [
-  {
-    name: "globalPopulation",
-    description:
-      "A tool to get global population trends with optional year range filtering",
-    tool: getGlobalPopulationTrend,
-    inputSchema: z.object({
-      startYear: z.number().optional(),
-      endYear: z.number().optional(),
-    }),
-    outputSchema: z.array(
-      z.object({
-        year: z.number(),
-        population: z.number(),
-        growthRate: z.number(),
-      }),
-    ),
-  },
-];
-```
-
-Find more information about tools [here.](https://docs.tambo.co/concepts/tools)
-
-### The Magic of Tambo Requires the TamboProvider
-
-Make sure in the TamboProvider wrapped around your app:
-
-```tsx
-...
-<TamboProvider
-  apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY!}
-  components={components} // Array of components to control
-  tools={tools} // Array of tools it can use
->
-  {children}
-</TamboProvider>
-```
-
-In this example we do this in the `Layout.tsx` file, but you can do it anywhere in your app that is a client component.
-
-### Voice input
-
-The template includes a `DictationButton` component using the `useTamboVoice` hook for speech-to-text input.
+### Tambo Configuration
+The core AI configuration lives in `src/lib/tambo.ts`. This file defines:
+*   **Tools**: Functions the AI can execute (e.g., `getProjectStats`, `createTask`).
+*   **Components**: UI elements the AI can generate (e.g., `TaskCard`, `ProjectDashboard`).
 
 ### MCP (Model Context Protocol)
+Vangraph uses MCP to connect with external services. Configure MCP servers in `src/components/tambo/mcp-components.tsx` to extend capabilities.
 
-The template includes MCP support for connecting to external tools and resources. You can use the MCP hooks from `@tambo-ai/react/mcp`:
+## Project Structure
 
-- `useTamboMcpPromptList` - List available prompts from MCP servers
-- `useTamboMcpPrompt` - Get a specific prompt
-- `useTamboMcpResourceList` - List available resources
-
-See `src/components/tambo/mcp-components.tsx` for example usage.
-
-### Change where component responses are shown
-
-The components used by tambo are shown alongside the message response from tambo within the chat thread, but you can have the result components show wherever you like by accessing the latest thread message's `renderedComponent` field:
-
-```tsx
-const { thread } = useTambo();
-const latestComponent =
-  thread?.messages[thread.messages.length - 1]?.renderedComponent;
-
-return (
-  <div>
-    {latestComponent && (
-      <div className="my-custom-wrapper">{latestComponent}</div>
-    )}
-  </div>
-);
+```bash
+src/
+├── app/                  # Next.js App Router pages
+│   ├── board/            # Kanban board view
+│   ├── chat/             # AI Chat interface
+│   ├── projects/         # Project management views
+│   └── page.tsx          # Main dashboard
+├── components/
+│   ├── atomic/           # Reusable atomic UI components
+│   ├── layout/           # Sidebar, Header, etc.
+│   └── tambo/            # AI-generatable components (TaskCard, etc.)
+├── lib/
+│   └── tambo.ts          # Tambo AI registry & config
+└── services/
+    └── supabase/         # Backend service integration
 ```
 
-For more detailed documentation, visit [Tambo's official docs](https://docs.tambo.co).
+## Development
+
+*   **Build**: `npm run build`
+*   **Lint**: `npm run lint`
+*   **Lint Fix**: `npm run lint:fix`
+
+## Support
+
+For issues, please file a bug report in the [Issues](https://github.com/hebypaul/Vangraph/issues) tab.
+
+## License
+
+This project is licensed under the MIT License.
